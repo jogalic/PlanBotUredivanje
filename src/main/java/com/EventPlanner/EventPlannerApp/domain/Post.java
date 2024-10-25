@@ -10,10 +10,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity 
 @Table(name="posts")//bc not sure if word "post" is already reserved, just to be sure
 public class Post {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String status; //maybe create entity (published, deleted, finished...)
 	private Long postNumber; 
 	
@@ -27,6 +32,13 @@ public class Post {
 	private List<User> NotJoinedBy = new ArrayList<>(); 
 	private List<Comment> comments = new ArrayList<>(); 
 	private List<Suggestion> suggestions = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getStatus() {
 		return status;
 	}
