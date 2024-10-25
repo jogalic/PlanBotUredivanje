@@ -39,8 +39,16 @@ public class Post {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
 	private List<User> joinedBy = new ArrayList<>(); 
+	@ManyToMany
+	@JoinTable(
+	        name = "user_notjoined_posts", // Join table to handle the many-to-many relationship
+	        joinColumns = @JoinColumn(name = "post_id"),
+	        inverseJoinColumns = @JoinColumn(name = "user_id")
+	    )
 	private List<User> NotJoinedBy = new ArrayList<>(); 
+	@ManyToMany
 	private List<Comment> comments = new ArrayList<>(); 
+	@ManyToMany
 	private List<Suggestion> suggestions = new ArrayList<>();
 
 	public Long getId() {
