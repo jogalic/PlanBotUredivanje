@@ -9,6 +9,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,11 +25,19 @@ public class Post {
 	private Long postNumber; 
 	
 	@OneToOne(fetch=FetchType.EAGER, optional=true, cascade=CascadeType.ALL)
-	@JoinColumn(name = "image_attachment_id") // Specifies the foreign key column
+	@JoinColumn(name = "picture_id") // Specifies the foreign key column
 	private ImageAttachment picture; 
 	
 	@ManyToOne(fetch=FetchType.EAGER, optional= false, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "published_by_id") // Foreign key for User
 	private User publishedBy; 
+	
+	@ManyToMany // Many users can join many posts
+    @JoinTable(
+        name = "user_joined_posts", // Join table to handle the many-to-many relationship
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
 	private List<User> joinedBy = new ArrayList<>(); 
 	private List<User> NotJoinedBy = new ArrayList<>(); 
 	private List<Comment> comments = new ArrayList<>(); 

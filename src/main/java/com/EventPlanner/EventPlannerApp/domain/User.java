@@ -15,8 +15,11 @@ public class User {
 	private String password;
 	private String emailAddress;
 	//private List<Post> posts = new ArrayList<>(); I don't think it is needed
-	private List<Post> joinedPosts = new ArrayList<>();
+	@ManyToMany(mappedBy = "joinedBy") // Relationship to posts joined by the user
+    private List<Post> joinedPosts = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "publishedBy") // One user can publish many posts
+    private List<Post> publishedPosts = new ArrayList<>();
 	
 
 	public Long getId() {
