@@ -3,19 +3,23 @@ package com.EventPlanner.EventPlannerApp.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity //it will create table User in sql - problem (user word already reserved for something else)
 @Table(name="users") //creating table for User, but with different name
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String password;
 	private String emailAddress;
 	//private List<Post> posts = new ArrayList<>(); I don't think it is needed
-	private List<Post> joinedPosts = new ArrayList<>();
+	@ManyToMany(mappedBy = "joinedBy") // Relationship to posts joined by the user
+    private List<Post> joinedPosts = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "publishedBy") // One user can publish many posts
+    private List<Post> publishedPosts = new ArrayList<>();
 	
 
 	public Long getId() {
